@@ -5,8 +5,8 @@
 </div><!-- end #body -->
 
 <footer id="footer" role="contentinfo">
-    &copy; <?php echo date('Y'); ?> <a href="<?php $this->options->siteUrl(); ?>"><?php $this->options->title(); ?></a>.
-    <?php _e('由 <a href="http://www.typecho.org">Typecho</a> 强力驱动'); ?>.
+    <span>&copy;&nbsp;<?php echo date('Y'); ?>&nbsp;<?php $this->options->title(); ?></span>
+    <span><a href="http://beian.miit.gov.cn/">渝ICP备19009692号-1</a></span>
 </footer><!-- end #footer -->
 
 <?php $this->footer(); ?>
