@@ -204,17 +204,6 @@ class Typecho_Common
         /** 设置自动载入函数 */
         spl_autoload_register(array('Typecho_Common', '__autoLoad'));
 
-        /** 兼容php6 */
-        if (function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc()) {
-            $_GET = self::stripslashesDeep($_GET);
-            $_POST = self::stripslashesDeep($_POST);
-            $_COOKIE = self::stripslashesDeep($_COOKIE);
-
-            reset($_GET);
-            reset($_POST);
-            reset($_COOKIE);
-        }
-
         /** 设置异常截获函数 */
         set_exception_handler(array('Typecho_Common', 'exceptionHandle'));
     }
@@ -415,17 +404,6 @@ EOF;
             ;
     }
 
-    /**
-     * 递归去掉数组反斜线
-     *
-     * @access public
-     * @param mixed $value
-     * @return mixed
-     */
-    public static function stripslashesDeep($value)
-    {
-        return is_array($value) ? array_map(array('Typecho_Common', 'stripslashesDeep'), $value) : stripslashes($value);
-    }
 
     /**
      * 抽取多维数组的某个元素,组成一个新数组,使这个数组变成一个扁平数组
