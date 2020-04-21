@@ -17,7 +17,7 @@ if (!defined('__TYPECHO_ROOT_DIR__')) exit;
  * @category typecho
  * @package Widget
  */
-class Widget_Upload extends Widget_Abstract_Contents implements Widget_Interface_Do
+class Widget_Upload extends Widget_Abstract_Assets implements Widget_Interface_Do
 {
     //上传文件目录
     const UPLOAD_DIR = '/usr/uploads';
@@ -324,8 +324,8 @@ class Widget_Upload extends Widget_Abstract_Contents implements Widget_Interface
 
                     $insertId = $this->insert($struct);
 
-                    $this->db->fetchRow($this->select()->where('table.contents.cid = ?', $insertId)
-                    ->where('table.contents.type = ?', 'attachment'), array($this, 'push'));
+                    $this->db->fetchRow($this->select()->where('table.assets.cid = ?', $insertId)
+                    ->where('table.assets.type = ?', 'attachment'), array($this, 'push'));
 
                     /** 增加插件接口 */
                     $this->pluginHandle()->upload($this);
@@ -359,8 +359,8 @@ class Widget_Upload extends Widget_Abstract_Contents implements Widget_Interface
         if (!empty($_FILES)) {
             $file = array_pop($_FILES);
             if (0 == $file['error'] && is_uploaded_file($file['tmp_name'])) {
-                $this->db->fetchRow($this->select()->where('table.contents.cid = ?', $this->request->filter('int')->cid)
-                    ->where('table.contents.type = ?', 'attachment'), array($this, 'push'));
+                $this->db->fetchRow($this->select()->where('table.assets.cid = ?', $this->request->filter('int')->cid)
+                    ->where('table.assets.type = ?', 'attachment'), array($this, 'push'));
 
                 if (!$this->have()) {
                     $this->response->setStatus(404);
@@ -386,8 +386,8 @@ class Widget_Upload extends Widget_Abstract_Contents implements Widget_Interface
                         'text'      =>  serialize($result)
                     ), $this->db->sql()->where('cid = ?', $this->cid));
 
-                    $this->db->fetchRow($this->select()->where('table.contents.cid = ?', $this->cid)
-                    ->where('table.contents.type = ?', 'attachment'), array($this, 'push'));
+                    $this->db->fetchRow($this->select()->where('table.assets.cid = ?', $this->cid)
+                    ->where('table.assets.type = ?', 'attachment'), array($this, 'push'));
 
                     /** 增加插件接口 */
                     $this->pluginHandle()->modify($this);
