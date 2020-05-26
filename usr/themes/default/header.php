@@ -14,6 +14,7 @@
         ), '', ' - '); ?><?php $this->options->title(); ?></title>
 
     <!-- 使用url函数转换相关路径 -->
+    <link rel="shortcut icon" href="/favicon.ico">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css">
     <link rel="stylesheet" href="<?php $this->options->themeUrl('grid.css'); ?>">
     <link rel="stylesheet" href="<?php $this->options->themeUrl('style.css'); ?>">
