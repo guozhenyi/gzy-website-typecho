@@ -14,13 +14,13 @@
         ), '', ' - '); ?><?php $this->options->title(); ?></title>
 
     <!-- 使用url函数转换相关路径 -->
-    <link rel="stylesheet" href="//cdn.bootcdn.net/ajax/libs/normalize/2.1.3/normalize.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.min.css">
     <link rel="stylesheet" href="<?php $this->options->themeUrl('grid.css'); ?>">
     <link rel="stylesheet" href="<?php $this->options->themeUrl('style.css'); ?>">
 
     <!--[if lt IE 9]>
-    <script src="//cdn.bootcdn.net/ajax/libs/html5shiv/r29/html5.min.js"></script>
-    <script src="//cdn.bootcdn.net/ajax/libs/respond.js/1.3.0/respond.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
     <![endif]-->
 
     <!-- 载入前置JS -->
