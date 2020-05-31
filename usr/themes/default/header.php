@@ -24,8 +24,8 @@
     <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
     <![endif]-->
 
-    <!-- 载入前置JS -->
-    <script src="<?php $this->options->themeUrl('before.js'); ?>"></script>
+    <!-- 载入自定义JS -->
+    <script src="<?php $this->options->themeUrl('awesome.js'); ?>"></script>
 
     <!-- 通过自有函数输出HTML头部信息 -->
     <?php $this->header(); ?>
