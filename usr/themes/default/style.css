@@ -1,7 +1,8 @@
 body {
     background-color: #D9F3D9;
     color: #444;
-    font-family: "Droid Serif", Georgia, "Times New Roman", "PingFang SC", "Hiragino Sans GB", "Source Han Sans CN", "WenQuanYi Micro Hei", "Microsoft Yahei", serif;
+    /*font-family: "Droid Serif", Georgia, "Times New Roman", "PingFang SC", "Hiragino Sans GB", "Source Han Sans CN", "WenQuanYi Micro Hei", "Microsoft Yahei", serif;*/
+    font-family: Helvetica,Tahoma,Arial,"Microsoft Yahei","PingFang SC","WenQuanYi Micro Hei",sans-serif;
     font-size: 87.5%;
 }
 
