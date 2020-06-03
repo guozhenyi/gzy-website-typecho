@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>vue框架学习入门demo</title>
+    <style>
+        body {
+            margin: 0 auto;
+            padding-bottom: 500px;;
+            width: 900px;
+        }
+        .button {
+            padding-left: 20px;
+            padding-right: 20px;
+            height: 2.4em;
+        }
+        .text{
+            margin-right: 20px;
+            height: 2em;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
+</head>
+<body>
+
+<h1 class="title">vue框架学习入门demo</h1>
+
+<h3>1. 入门</h3>
+<p>1.1 vue版</p>
+<div id="app">{{message}}</div>
+<script>
+    var app = new Vue({
+        el: "#app",
+        data: {
+            message: "Hello Vue!"
+        }
+    });
+</script>
+<p>1.2 jQuery版</p>
+<div id="jq_app"></div>
+<script>
+    var jqApp = {message: "Hello jQuery!"};
+    jQuery('#jq_app').text(jqApp.message);
+</script>
+
+<hr>
+
+<h3>2. 绑定元素 attribute</h3>
+<p>2.1 vue版</p>
+<div id="app_2">
+    <span v-bind:title="message" v-bind:style="styleInfo">
+        鼠标悬停几秒钟查看此处动态绑定的提示信息！
+    </span>
+</div>
+<script>
+    var app2 = new Vue({
+        el: "#app_2",
+        data: {
+            message: '页面加载于 ' + new Date().toLocaleString(),
+            styleInfo: "color:red;"
+        }
+    });
+</script>
+<p>2.2 jQuery版</p>
+<div id="jq_app_2">
+    <span title="" class="t">
+        鼠标悬停几秒钟查看此处动态绑定的提示信息！(jq)
+    </span>
+</div>
+<script>
+    var jqApp2 = {message: '页面加载于 ' + new Date().toLocaleString()};
+    jQuery('#jq_app_2').find('.t').attr('title', jqApp2.message);
+</script>
+
+<hr>
+
+<h3>3. 条件</h3>
+<p>3.1 vue版</p>
+<div id="app_3">
+    <p><input type="button" class="button" value="显示/隐藏"></p>
+    <p v-if="seen">现在你看到我了</p>
+</div>
+<script>
+    var app3 = new Vue({
+        el: '#app_3',
+        data: {
+            seen: true
+        }
+    });
+
+    var ele3 = document.querySelector('#app_3');
+    var btn3 = ele3.getElementsByClassName('button');
+    btn3[0].addEventListener('click', function(){
+        if (app3.seen) {
+            app3.seen = false;
+        } else {
+            app3.seen = true;
+        }
+    });
+</script>
+<p>3.2 jQuery版</p>
+<div id="jq_app_3">
+    <p><input type="button" class="button" value="显示/隐藏(jq)"></p>
+    <p class="seen-con">现在你看到我了</p>
+</div>
+<script>
+    var jqApp3 = {seen: true};
+    jQuery('#jq_app_3 > p > input[type=button]').on('click', function(){
+        if (jqApp3.seen) {
+            jQuery('#jq_app_3 .seen-con').hide();
+            jqApp3.seen = false;
+        } else {
+            jQuery('#jq_app_3 .seen-con').show();
+            jqApp3.seen = true;
+        }
+    });
+</script>
+
+<hr>
+
+<h3>4. 循环</h3>
+<p>4.1 vue版</p>
+<div id="app_4">
+    <p><input type="text" class="text"><input type="button" class="button" value="增加"></p>
+    <ol>
+        <li v-for="todo in todos">
+            {{todo.text}}
+        </li>
+    </ol>
+</div>
+<script>
+    var app4 = new Vue({
+        el: "#app_4",
+        data: {
+            todos: [
+                {text: "学习JavaScript"},
+                {text: "学习Vue"},
+                {text: "整个牛项目"}
+            ]
+        }
+    });
+
+    var ele4 = document.querySelector('#app_4');
+    var btn4 = ele4.getElementsByClassName('button');
+    var txt4 = ele4.getElementsByClassName('text');
+
+    btn4[0].addEventListener('click', function(){
+        let con = txt4[0].value;
+        if (con) {
+            app4.todos.push({text: con});
+            txt4[0].value = ''; // 清空文本框的值
+            txt4[0].focus(); // 文本框继续获得输入焦点
+        }
+    });
+</script>
+<p>4.2 jQuery版</p>
+<div id="jq_app_4">
+    <p><input type="text" class="text"><input type="button" class="button" value="增加"></p>
+    <ol>
+    </ol>
+</div>
+<script>
+    var jqApp4 = {
+        todos: [
+            {text: "学习JavaScript"},
+            {text: "学习Vue"},
+            {text: "整个牛项目"}
+        ]
+    };
+
+    var jq4List = '';
+    for (x in jqApp4.todos) {
+        jq4List += '<li>' + jqApp4.todos[x].text + '</li>\n';
+    }
+
+    jQuery('#jq_app_4 ol').html(jq4List);
+
+    jQuery('#jq_app_4 > p > input[type=button]').on('click', function(){
+        let jqText = jQuery('#jq_app_4 .text');
+        if (jqText.val()) {
+            jQuery('#jq_app_4 ol').append('<li>' + jqText.val() + '</li>\n');
+            jqText.val(''); // 清空文本框的值
+            jqText.focus(); // 文本框继续获得输入焦点
+        }
+    });
+</script>
+
+<hr>
+
+<h3>5. 绑定事件</h3>
+<p>5.1 vue版</p>
+<div id="app_5">
+    <p>{{ message }}</p>
+    <input type="button" class="button" value="反转消息" v-on:click="reverseMessage" >
+</div>
+<script>
+    var app5 = new Vue({
+        el: "#app_5",
+        data: {
+            message: "hello Vue.js!"
+        },
+        methods: {
+            reverseMessage: function() {
+                this.message = this.message.split('').reverse().join('');
+            }
+        }
+    });
+</script>
+<p>5.2 jQuery版</p>
+<div id="jq_app_5">
+    <p>{{ message }}</p>
+    <input type="button" class="button" value="反转消息">
+</div>
+<script>
+    var jqApp5 = {message: "hello boy!"};
+
+    jQuery('#jq_app_5 > p').text(jqApp5.message);
+
+    jQuery('#jq_app_5 .button').on('click', function(){
+        let jqP = jQuery('#jq_app_5 > p');
+        jqP.text(jqP.text().split('').reverse().join(''));
+    });
+</script>
+
+<hr>
+
+<h3>6. 表单双向绑定</h3>
+<div id="app_6">
+    <p>{{ message }}</p>
+    <input v-model="message" class="text">
+</div>
+<script>
+    var app6 = new Vue({
+        el: "#app_6",
+        data: {
+            message: "Hello Vue"
+        }
+    });
+</script>
+
+<hr>
+
+<h3>7. 组件</h3>
+<div id="app_7">
+    <ol>
+        <todo-item v-for="item in groceryList" v-bind:todo="item" v-bind:key="item.id"></todo-item>
+    </ol>
+</div>
+<script>
+    // 在Vue中注册组件
+    Vue.component('todo-item', {
+        props: ['todo'],
+        template: '<li>{{ todo.text }}</li>'
+    });
+
+    var app7 = new Vue({
+        el: '#app_7',
+        data: {
+            groceryList: [
+                {id: 0, text: '蔬菜'},
+                {id: 1, text: '水果'},
+                {id: 2, text: '牛肉'},
+            ]
+        }
+    });
+</script>
+
+<hr>
+
+<h3>8. 侦听器</h3>
+<div id="watch-example">
+    <p>问一个是或否(yes/no)的问题: <input v-model="question"></p>
+    <p>{{ answer }}</p>
+</div>
+<!-- 因为 AJAX 库和通用工具的生态已经相当丰富，Vue 核心代码没有重复 -->
+<!-- 提供这些功能以保持精简。这也可以让你自由选择自己更熟悉的工具。 -->
+<script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js"></script>
+<script>
+    var watchExampleVM = new Vue({
+        el: '#watch-example',
+        data: {
+            question: '',
+            answer: '请先输入问题！'
+        },
+        watch: {
+            // 如果 `question` 发生改变，这个函数就会运行
+            question: function(newQuestion, oldQuestion) {
+                this.answer = '正在输入中...';
+                this.debouncedGetAnswer();
+            }
+        },
+        created: function() {
+            this.debouncedGetAnswer = _.debounce(this.getAnswer, 500)
+        },
+        methods: {
+            getAnswer: function() {
+                if (this.question.indexOf('?') === -1) {
+                    this.answer = '问题要以问号结尾嘛 :-)'
+                    return
+                }
+                this.answer = '思考一下...';
+                var vm = this;
+                axios.get('https://yesno.wtf/api')
+                    .then(function(response) {
+                        vm.answer = _.capitalize(response.data.answer)
+                    })
+                    .catch(function(error) {
+                        vm.answer = 'Error! Could not reach the API. ' + error 
+                    });
+            }
+        }
+    });
+</script>
+
+
+
+
+</body>
+</html>
