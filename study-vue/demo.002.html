@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Vue Router</title>
+    <style>
+        .main {
+            margin-top:20px;
+            min-height: 300px;
+            box-sizing: border-box;
+            border: 1px solid red;
+        }
+        .main-sub1 {
+            margin-top:20px;
+            box-sizing: border-box;
+            border: 1px solid green;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <h1>这是一个 vue router demo !</h1>
+    <nav>
+        <!-- 使用 router-link 组件来导航. -->
+        <!-- 通过传入 `to` 属性指定链接. -->
+        <!-- <router-link> 默认会被渲染成一个 `<a>` 标签 -->
+        <div><router-link to="/">/index</router-link></div>
+        <div><router-link to="/foo">/foo</router-link></div>
+        <div><router-link to="/bar">/bar</router-link></div>
+        <div><router-link to="/users/1">/users/1</router-link></div>
+        <div><router-link to="/users/3/profile">/users/3/profile</router-link></div>
+    </nav>
+    <div class="main">
+        <!-- 路由出口 -->
+        <!-- 路由匹配到的组件将渲染在这里 -->
+        <router-view></router-view>
+    </div>
+    
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.11/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue-router@3.0.3/dist/vue-router.js"></script>
+<script>
+
+
+// 1. 定义（路由）组件。
+// 可以从其他文件 import 进来
+const Foo = {template: '<div><p>您正在访问 {{ $route.fullPath }}</p></div>'};
+const Bar = {template: '<div><p>您正在访问 {{ $route.fullPath }}</p></div>'};
+
+const User = {
+    template: `
+        <div class="user">
+            <p>您正在访问 {{ $route.fullPath }}</p>
+            <div class="main-sub1">
+                <router-view></router-view>
+            </div>
+        </div>
+    `,
+    // Vue 2.2+ 引入的导航守卫，为了响应路由参数变化
+    // 不加这个你会发现在 /users/1 和 /users/3/profile 之间切换时，页面没有重新渲染
+    beforeRouteUpdate (to, from, next) {
+        next()
+    }
+};
+
+const NotFound = {
+    template: `
+        <div>
+            <div>404 Not Found</div>
+            <div>{{ $route.params.pathMatch }} 路由不存在</div>
+        </div>
+    `,
+}
+
+// 2. 定义路由
+// 每个路由应该映射一个组件。其中"component"可以是
+// 通过 Vue.extend() 创建的组件构造器，
+// 或者，知识一个组件配置对象。
+// 晚点再讨论嵌套路由。
+const routeList = [
+    { 
+        path: '/', 
+        component: {
+            template: '<div>欢迎访问本系统！</div>'
+        } 
+    },
+    { path: '/foo', component: Foo },
+    { path: '/bar', component: Bar },
+    { 
+        path: '/users/:id', 
+        component: User,
+        children: [
+            {
+                path: '',
+                component: {
+                    template: '<div>User index</div>'
+                }
+            },
+            {
+                path: 'profile',
+                component: {
+                    template: `
+                        <div>
+                            profile yes
+                        </div>
+                    `
+                }
+            }
+        ]
+    },
+
+    { path: '*', component: NotFound }
+]
+
+// 3. 创建 router 实例，然后传 `routes` 配置
+// 你还可以传别的配置参数，不过先这么简单着吧。
+const router = new VueRouter({
+    // mode: 'history',
+    routes: routeList
+})
+
+// 4. 创建和挂载根实例。
+// 记得要通过 router 配置参数注入路由，
+// 从而让整个应用都有路由功能
+const app = new Vue({
+    router
+}).$mount('#app')
+
+// 现在，应用已经启动了！
+
+
+
+</script>
+</body>
+</html>
